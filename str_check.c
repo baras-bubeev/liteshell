@@ -34,8 +34,8 @@ char	*key_search(char **key, char **envp)
 	{
 		if (!ft_strncmp(envp[i], *key, keylen))
 		{
-			if (envp[i][keylen] == '=')
-				tmp = ft_substr(envp[i], ++keylen, ft_strlen(envp[i]) - keylen);
+			if (envp[i][keylen] == '=' && keylen++)
+				tmp = ft_substr(envp[i], keylen, ft_strlen(envp[i]) - keylen);
 		}
 		i++;
 	}
@@ -92,13 +92,13 @@ char	*quote(char *str, int *i, char **envp)
 	return (str);
 }
 
-int	str_check(char *str, char **envp)
+char	*str_check(char *str, char **envp)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] == ' ' || str[i] == '\t')
-		i++;
+	while (*str == ' ' || *str == '\t')
+		str++;
 	if (str[i] == '|')
 		ft_exit(-1, PIPE_ERROR);
 	while (str[i])
@@ -113,7 +113,9 @@ int	str_check(char *str, char **envp)
 			str = dollar(str, &i, envp);
 		i++;
 	}
-	printf("%s", str);
-
-	return (0);///
+	// printf("%s\n", str);
+	i = 0;
+	while (str[i] && str[i] != ' ' && str[i] != '\t')
+		i++;
+	return (ft_substr(str, 0, i));///
 }

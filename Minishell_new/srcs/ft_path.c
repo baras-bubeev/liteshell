@@ -6,7 +6,7 @@
 /*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 18:46:29 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/20 07:25:36 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/07/27 21:46:47 by jkorey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void		ft_path(t_pl *pl)
 {
-	int		i;
 	int		count_path_str;
 	char	*tmp;
 

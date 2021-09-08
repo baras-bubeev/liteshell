@@ -6,16 +6,16 @@
 /*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 08:47:13 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/20 22:19:16 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/07/27 22:10:54 by jkorey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../minishell.h"
 
-void	ft_add_line_in_arr(char **arr, char *line, int i_before_line,
-		int new_size)
-{
+// void	ft_add_line_in_arr(char **arr, char *line, int i_before_line,
+// 		int new_size)
+// {
 // 	char	**tmp;
 // 	int		i;
 // 	int		j;
@@ -43,4 +43,11 @@ void	ft_add_line_in_arr(char **arr, char *line, int i_before_line,
 // 		a++;
 // 	}
 // 	free(tmp);
+// }
+
+void	ft_add_line_in_arr(t_size *arr, char *line, int key_ignore)
+{
+	arr->arr[arr->size] = ft_strdup(line);
+	arr->key_ignore[arr->size] = key_ignore;
+	arr->size++;
 }

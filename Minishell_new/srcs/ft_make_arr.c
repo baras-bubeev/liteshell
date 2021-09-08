@@ -6,7 +6,7 @@
 /*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 18:53:36 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/21 08:38:42 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/07/25 01:41:18 by jkorey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,12 @@
 	j = 0;
 	while(arr[j] != 0)
 		j++;
-	tmp = (char**)ft_calloc((j + 1 + 30), sizeof(char*));
+	tmp = (char**)ft_calloc((j + 1 + 60), sizeof(char*));
 	while(i < j)
 	{
 		tmp[i] = ft_strdup(arr[i]);
 		i++;
 	}
-	// tmp[i] = NULL;
 	*size = j;
 	return (tmp);
 }

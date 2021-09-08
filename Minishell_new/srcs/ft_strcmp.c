@@ -6,7 +6,7 @@
 /*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 16:18:59 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/16 07:59:11 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/07/27 21:56:25 by jkorey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		ft_strcmp(const char *s1, const char *s2)
 {
-	size_t	i;
+	int		i;
 	int		len1;
 	int		len2;
 	int		max_len;

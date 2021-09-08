@@ -6,7 +6,7 @@
 /*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 17:36:28 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/21 07:51:37 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/07/27 21:45:50 by jkorey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ int		ft_find_string_int(char **arr, char *name)
 
 char	*ft_find_string_char(t_pl *pl, char *name)
 {
-	int		count;
 	int		i;
 	char	*string;
 	
+	string = NULL;
 	i = ft_find_string_int(pl->envp.arr, name);
-	string = ft_strdup_from(pl->envp.arr[i], ft_strlen(name));
+	if (i >= 0)
+		string = ft_strdup_from(pl->envp.arr[i], ft_strlen(name));
 	return (string);
 }

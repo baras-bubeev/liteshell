@@ -6,18 +6,28 @@
 /*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 12:40:15 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/21 00:09:50 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/07/25 01:19:18 by jkorey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_replace_key_in_arr(char *str, char *key, char *new_mining)
+void	ft_replace_key_in_arr(char *str, char *key, char *new_key)
 {
 	char	*tmp;
 
 	tmp = ft_strdup_from(str, ft_strlen(key));
 	free(str);
-	str = ft_strjoin(key, tmp);
+	str = ft_strjoin(new_key, tmp);
+	free(tmp);
+}
+
+void	ft_replace_mining_in_arr(char *str, char *key, char *new_mining)
+{
+	char	*tmp;
+
+	tmp = ft_strjoin(key, new_mining);
+	free(str);
+	str = ft_strdup(tmp);
 	free(tmp);
 }
