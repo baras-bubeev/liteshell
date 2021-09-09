@@ -6,7 +6,7 @@
 /*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:59:39 by mpowder           #+#    #+#             */
-/*   Updated: 2021/09/09 20:17:45 by mpowder          ###   ########.fr       */
+/*   Updated: 2021/09/09 20:26:04 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_fname_out(char *str, int *i)
 	return (ft_substr(str, start, len));
 }
 
-int		get_fd_out(char *fname, int fl)
+int		get_fd_out(char *fname, int fl) // close fd
 {
 	int	fd;
 
@@ -53,7 +53,7 @@ void	redirect_out(char *str, int *i, t_pl *pl)
 	pl->flag = 3;
 	heredoc = 0;
 	slen = ft_strlen(str);
-	str[*i] = 0; // сделать склейку строк
+	str[*i] = 0;
 	if (str[++(*i)] == '>')
 	{
 		heredoc = 1;
@@ -63,6 +63,4 @@ void	redirect_out(char *str, int *i, t_pl *pl)
 	pl->fd_out = get_fd_out(fname, heredoc);
 	free(fname);
 	ft_strlcat(str, str + *i, slen);
-	printf("%s\n", str);
-
 }
