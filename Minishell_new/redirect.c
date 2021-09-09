@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpowder <mpowder@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:59:39 by mpowder           #+#    #+#             */
-/*   Updated: 2021/09/08 12:37:04 by mpowder          ###   ########.fr       */
+/*   Updated: 2021/09/09 20:17:45 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_output_fname(char *str)
+char	*get_fname_out(char *str, int *i)
 {
 	int start;
 	int	len;
@@ -21,23 +21,48 @@ char	*get_output_fname(char *str)
 	while (str[start] == ' ' || str[start] == '\t')
 		start++;
 	len = 0;
-	while (ft_isalnum(str[start + len])) /// какие символы может содержать имя файла????
+	while (str[start + len] && str[start + len] != ' ' && str[start + len] != '\t')
 		len++;
+	*i += start + len;
 	return (ft_substr(str, start, len));
 }
 
-int		get_output_fd(char *fname, int fl)
+int		get_fd_out(char *fname, int fl)
 {
+	int	fd;
 
+	if (fl == 1)
+		fd = open(fname, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else
+		fd = open(fname, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		write(2, "The file '", 10);
+		write(2, fname, ft_strlen(fname));
+		write(2, "' does not exist\n", 17);
+	}
+	return (fd);
 }
 
 void	redirect_out(char *str, int *i, t_pl *pl)
 {
-	if (str[*i] == '>' && str[++(*i)] == '>')
+	int 	heredoc;
+	char	*fname;
+	int		slen;
+
+	pl->flag = 3;
+	heredoc = 0;
+	slen = ft_strlen(str);
+	str[*i] = 0; // сделать склейку строк
+	if (str[++(*i)] == '>')
 	{
-		pl->redir.heredoc = 1;
+		heredoc = 1;
 		(*i)++;
 	}
-	pl->redir.output_fname = get_output_fname(str + (*i));
-	pl->redir.output_fd = get_output_fd(pl->redir.output_fname, pl->redir.heredoc);
+	fname = get_fname_out(str + (*i), i);
+	pl->fd_out = get_fd_out(fname, heredoc);
+	free(fname);
+	ft_strlcat(str, str + *i, slen);
+	printf("%s\n", str);
+
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_child_process.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 18:44:02 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/28 18:36:14 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/09/09 12:16:22 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,12 +169,14 @@ void	ft_child_process(t_pl *pl, int i)
 		}
 		pl->p.fd_1 = pl->p.fd[i + 1][1];
 		if (i == 0)
-			pl->p.fd_0 = STDIN_FILENO; // или fd_read
+			// pl->p.fd_0 = STDIN_FILENO; // или fd_read
+			pl->fd_0 = pl->fd_in;
 		else
 			pl->p.fd_0 = pl->p.fd[i][0];
 		dup2(pl->p.fd_0, 0);
 		if (i == pl->p.npipes)
-			pl->p.fd_1 = STDOUT_FILENO; // или fd_write
+			// pl->p.fd_1 = STDOUT_FILENO; // или fd_write
+			pl->p.fd_1 = pl->fd_out;
 		dup2(pl->p.fd_1, 1);
 		if (!(ft_if_builtin(pl, i, "echo cd pwd export unset env exit", 1, 0)))
 			ft_execve(i, pl);

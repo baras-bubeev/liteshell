@@ -109,8 +109,8 @@ char	*str_check(char *str, t_pl *pl)
 			str = quote(str, &i, pl->envp.arr);
 		if (str[i] == '>')
 			redirect_out(str, &i, pl);
-		if (str[i] == '<')
-			redirect_in(str, &i, pl);
+		// if (str[i] == '<')
+		// 	redirect_in(str, &i, pl);
 		if (str[i] == '$')
 			str = dollar(str, &i, pl->envp.arr);
 		i++;

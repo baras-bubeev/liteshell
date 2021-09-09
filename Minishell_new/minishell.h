@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpowder <mpowder@student.21-school.ru>     +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 17:20:11 by jkorey            #+#    #+#             */
-/*   Updated: 2021/09/08 12:22:19 by mpowder          ###   ########.fr       */
+/*   Updated: 2021/09/09 19:58:23 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,13 @@ typedef struct		s_cmd
 	int		old_flag;
 }					t_cmd;
 
-typedef struct		s_redirect
-{
-	char	*output_fname;
-	char	*input_fname;
-	int		heredoc;
-	int		output_fd;
-	int		input_fd;
-}					t_redirect;
+// typedef struct		s_redirect
+// {
+// 	char	*fname_out;
+// 	char	*fname_in;
+// 	int		fd_out;
+// 	int		fd_in;
+// }					t_redirect;
 
 
 //структура верхнего уровня - для пайплайнов (до ;)
@@ -82,13 +81,15 @@ typedef struct		s_pl
 	t_size		export;
 	t_pipe		p;
 	t_cmd		cmd;
-	t_redirect	redir;
+	// t_redirect	redir;
 	int			fd_0;
 	int			fd_1;
 	char		*pipe_line;
 	int			flag;
 	int			round_counter;
 	char		**path;
+	int			fd_in;
+	int			fd_out;
 }					t_pl;
 
 void	ft_add_line_in_arr(t_size *arr, char *line, int key_ignore);
@@ -150,7 +151,9 @@ void	ft_swap_str_in_arr(char **arr, int	*key_ignore, int str1, int str2);
 void	ft_unset(t_pl *pl, int cmd_i);
 void	ft_waitpid(t_pl *pl, int i);
 void	loop(t_pl *pl);
-void	ft_start_comands(t_pl *pl, char *pipe_line);
+// void	ft_start_comands(t_pl *pl, char *pipe_line);
+void	ft_start_comands(t_pl *pl);
 char	*str_check(char *str, t_pl *pl);
+void	redirect_out(char *str, int *i, t_pl *pl);
 
 #endif

@@ -2,8 +2,11 @@
 a.out
 a.out.dSYM
 libft
+loop.c
 main.c
 minishell.h
 minishell.h.gch
 minishell2.h
+redirect.c
 srcs
+start.sh
