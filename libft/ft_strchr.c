@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkorey <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/30 14:03:44 by mpowder           #+#    #+#             */
-/*   Updated: 2020/11/02 15:55:44 by mpowder          ###   ########.fr       */
+/*   Created: 2020/10/30 20:10:04 by jkorey            #+#    #+#             */
+/*   Updated: 2020/11/05 20:56:22 by jkorey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,18 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	while (*s)
+	size_t	i;
+
+	i = 0;
+	while (s[i])
 	{
-		if (*s == c)
-			return ((char *)s);
-		s++;
+		if (s[i] == c)
+			return ((char *)&s[i]);
+		else
+			i++;
 	}
-	if (c == 0)
-		return ((char *)s);
-	return (0);
+	if (c == '\0')
+		return ((char *)&s[i]);
+	else
+		return (NULL);
 }

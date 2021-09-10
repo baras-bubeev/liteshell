@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkorey <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/01 22:17:16 by mpowder           #+#    #+#             */
-/*   Updated: 2020/11/02 15:55:09 by mpowder          ###   ########.fr       */
+/*   Created: 2020/11/15 18:58:22 by jkorey            #+#    #+#             */
+/*   Updated: 2020/11/15 19:02:14 by jkorey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int		ft_lstsize(t_list *lst)
 	int	count;
 
 	count = 0;
-	while (lst)
+	while (lst != NULL)
 	{
-		count++;
 		lst = lst->next;
+		count++;
 	}
 	return (count);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkorey <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/30 21:43:57 by mpowder           #+#    #+#             */
-/*   Updated: 2020/11/02 15:55:25 by mpowder          ###   ########.fr       */
+/*   Created: 2020/11/06 14:31:48 by jkorey            #+#    #+#             */
+/*   Updated: 2020/11/12 16:03:08 by jkorey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t	i;
-	char	*p_dst;
-	char	*p_src;
+	size_t i;
 
-	i = 0;
-	p_dst = (char *)dst;
-	p_src = (char *)src;
 	if (!dst && !src)
 		return (0);
-	if (dst >= src && dst <= src + len)
+	i = len - 1;
+	if ((size_t)dst - (size_t)src < len)
 	{
-		while (--len)
-			p_dst[len] = p_src[len];
-		p_dst[len] = p_src[len];
+		while (len != 0)
+		{
+			((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+			--i;
+			--len;
+		}
 	}
 	else
 	{
+		i = 0;
 		while (i < len)
 		{
-			p_dst[i] = p_src[i];
+			((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
 			i++;
 		}
 	}

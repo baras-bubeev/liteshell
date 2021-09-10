@@ -3,37 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkorey <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/01 18:40:34 by mpowder           #+#    #+#             */
-/*   Updated: 2020/11/02 15:55:35 by mpowder          ###   ########.fr       */
+/*   Created: 2020/11/11 20:34:38 by jkorey            #+#    #+#             */
+/*   Updated: 2020/11/13 21:10:35 by jkorey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+void	ft_digit(int n, int fd)
+{
+	char	str;
+
+	str = n + 48;
+	write(fd, &str, 1);
+}
+
 void	ft_putnbr_fd(int n, int fd)
 {
-	char	c[10];
-	int		i;
+	unsigned int nbr;
 
-	i = 0;
-	if (n == -2147483648)
-		write(fd, "-2147483648", 11);
-	else
+	if (n < 0)
 	{
-		if (n < 0)
-		{
-			n *= -1;
-			write(fd, "-", 1);
-		}
-		while (n / 10 != 0)
-		{
-			c[i++] = n % 10 + '0';
-			n /= 10;
-		}
-		c[i] = n + '0';
-		while (i >= 0)
-			write(fd, &c[i--], 1);
+		write(fd, "-", 1);
+		nbr = (unsigned int)n * -1;
 	}
+	else
+		nbr = (unsigned int)n;
+	if (nbr >= 10)
+		ft_putnbr_fd(nbr / 10, fd);
+	ft_digit(nbr % 10, fd);
 }

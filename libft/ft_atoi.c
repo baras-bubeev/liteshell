@@ -3,38 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kseniakozyreva <kseniakozyreva@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/29 16:47:46 by mpowder           #+#    #+#             */
-/*   Updated: 2020/11/03 19:55:25 by mpowder          ###   ########.fr       */
+/*   Created: 2020/11/03 15:43:10 by jkorey            #+#    #+#             */
+/*   Updated: 2021/07/06 12:50:16 by kseniakozyr      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-int	ft_atoi(const char *str)
+int		ft_atoi(const char *str)
 {
 	int	i;
-	int	r;
-	int	fl;
+	int	numb;
+	int minus;
 
 	i = 0;
-	r = 0;
-	fl = 1;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+	minus = 1;
+	numb = 0;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
 		i++;
-	if (str[i] == '+' || str[i] == '-')
+	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
-			fl = -1;
+			minus = -1;
 		i++;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
+	if (str[i] < 48 || str[i] > 57)
+		return (0);
+	while (str[i] && str[i] >= 48 && str[i] <= 57)
 	{
-		r = r * 10 + (str[i] - '0');
+		numb = numb * 10 + (str[i] - '0');
 		i++;
 	}
-	r *= fl;
-	return ((int)r);
+	return (numb * minus);
 }

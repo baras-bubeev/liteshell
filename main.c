@@ -1,31 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/10 14:58:42 by mpowder           #+#    #+#             */
+/*   Updated: 2021/09/10 14:59:14 by mpowder          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-//	', ", $, >, <, >>, <<, |
-
-int main(int ac, char **av, char **env)
+int		main(int argc, char **argv, char **env)
 {
-	char	*buff;
-	// t_env	*envp;
-	// int i = 0;
-	(void)ac;
-	(void)av;
-	while (1)
-	{
-		buff = readline("minishell$ ");
-		if (ft_strncmp(buff, "\0", 1))
-		{
-			add_history(buff);
-			str_check(buff, env);
-		}
-		free(buff);
-	}
-	
-	// char s[] = "jds$a bc $123vnsdv ' sdvsd\"vs$USER dg'\"s'sdv$USER fc \"   'sdsdvsd' ";
-	// char *s2 = "";
-	// printf("%s\n", ft_strjoin(s, s2));
-	// while (++i < ac)
-	// 	parser(av[i]);
-	// str_check(s, env);
-	printf("\n");
+	(void)argc;
+	(void)argv;
+	t_pl	pl;
+	char	*pipe_line;
+
+	pl.round_counter = -1;
+	cmd_exit = 0;
+	pl.fd_in = 0;
+	pl.fd_out = 1;
+	pl.envp.arr = ft_make_arr_copy(&pl.envp.size, env);
+	pl.export.arr = ft_make_arr_copy(&pl.export.size, env);
+	ft_shlvl(&pl);
+	loop(&pl);
 	return (0);
 }

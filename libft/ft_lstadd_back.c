@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jkorey <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/01 22:29:26 by mpowder           #+#    #+#             */
-/*   Updated: 2020/11/06 17:59:42 by mpowder          ###   ########.fr       */
+/*   Created: 2020/11/15 19:23:51 by jkorey            #+#    #+#             */
+/*   Updated: 2020/11/15 19:45:39 by jkorey           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	t_list	*p;
+	t_list *tmp;
 
-	p = *lst;
+	tmp = *lst;
 	if (!new)
 		return ;
 	if (!(*lst))
@@ -24,6 +24,7 @@ void	ft_lstadd_back(t_list **lst, t_list *new)
 		*lst = new;
 		return ;
 	}
-	p = ft_lstlast(p);
-	p->next = new;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new;
 }
