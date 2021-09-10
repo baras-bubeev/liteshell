@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 17:19:57 by jkorey            #+#    #+#             */
-/*   Updated: 2021/09/09 17:46:31 by mpowder          ###   ########.fr       */
+/*   Updated: 2021/09/10 02:46:12 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,15 +103,24 @@ void	ft_prepare_variables(t_pl *pl, int round_counter)
 // void	ft_start_comands(t_pl *pl, char *pipe_line)
 void	ft_start_comands(t_pl *pl)
 {
-	pl->round_counter++;
-	ft_prepare_variables(pl, pl->round_counter);
-	// pl->pipe_line = ft_strdup(pipe_line);
-	ft_set_cmd_flag(pl, pl->pipe_line);
-	if (pl->flag == 1 || pl->flag == 3)
-		ft_fork(pl->pipe_line, pl, -1);
-	if (pl->flag == 2)
-		ft_single_builtin(pl->pipe_line, pl, -1);
-	ft_clean_variables(pl);
+	if (pl->fd_in != -1 && pl->fd_out != -1)
+	{
+		pl->round_counter++;
+		ft_prepare_variables(pl, pl->round_counter);
+		// pl->pipe_line = ft_strdup(pipe_line);
+		ft_set_cmd_flag(pl, pl->pipe_line);
+		if (pl->flag == 1 || pl->flag == 3)
+			ft_fork(pl->pipe_line, pl, -1);
+		if (pl->flag == 2)
+			ft_single_builtin(pl->pipe_line, pl, -1);
+		ft_clean_variables(pl);
+	}
+	if (pl->fd_in != 0)
+		close(pl->fd_in);
+	pl->fd_in = 0;
+	if (pl->fd_out != 1)
+		close(pl->fd_out);
+	pl->fd_out = 1;
 	// printf("%d\n", pl->flag);
 }
 

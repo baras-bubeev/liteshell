@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 17:20:11 by jkorey            #+#    #+#             */
-/*   Updated: 2021/09/09 19:58:23 by mpowder          ###   ########.fr       */
+/*   Updated: 2021/09/10 02:08:58 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,6 @@ void	loop(t_pl *pl);
 // void	ft_start_comands(t_pl *pl, char *pipe_line);
 void	ft_start_comands(t_pl *pl);
 char	*str_check(char *str, t_pl *pl);
-void	redirect_out(char *str, int *i, t_pl *pl);
+void	redirect(char *str, int *i, t_pl *pl, char redir);
 
 #endif

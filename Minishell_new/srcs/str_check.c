@@ -107,8 +107,8 @@ char	*str_check(char *str, t_pl *pl)
 			str = apostrophe(str, &i);
 		if (str[i] == '\"')
 			str = quote(str, &i, pl->envp.arr);
-		if (str[i] == '>')
-			redirect_out(str, &i, pl);
+		if (str[i] == '>' || str[i] == '<')
+			redirect(str, &i, pl, str[i]);
 		// if (str[i] == '<')
 		// 	redirect_in(str, &i, pl);
 		if (str[i] == '$')
