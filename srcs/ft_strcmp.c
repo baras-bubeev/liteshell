@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/08 16:18:59 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/27 21:56:25 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/09/11 01:04:54 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		ft_strcmp(const char *s1, const char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	int		i;
 	int		len1;

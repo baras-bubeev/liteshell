@@ -6,7 +6,7 @@
 /*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 17:19:57 by jkorey            #+#    #+#             */
-/*   Updated: 2021/09/10 15:08:17 by mpowder          ###   ########.fr       */
+/*   Updated: 2021/09/11 06:20:57 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,12 @@
 
 void	ft_set_cmd_flag(t_pl *pl, char *pipe_line)
 {
-	int		i;
-
+	(void)pipe_line;
 	if (pl->round_counter > 0)
 		pl->cmd.old_flag = pl->flag;
-	i = -1;
-	while (pipe_line[++i] && pl->flag == 0)
-		if (pipe_line[i] == '|')
-			pl->flag = 1;
 	if (pl->flag == 0)
 	{
-		if (!(ft_if_builtin(pl, 0, "echo cd pwd export unset env exit", 0, 0)))
+		if (!(ft_if_builtin(pl, 0, 0, 0)))
 			pl->flag = 1;
 		else
 			pl->flag = 2;
@@ -39,25 +34,7 @@ void	ft_mute_oldpwd(t_pl *pl)
 	i = -1;
 	count = 1;
 	while (++i < pl->envp.size && count)
-	{
-		if (!(ft_strncmp("OLDPWD=", pl->envp.arr[i], 7)))
-		{
-			pl->envp.key_ignore[i] = 0;
-			pl->export.key_ignore[i] = 0;
-			free(pl->export.arr[i]);
-			ft_swap_str_in_arr(pl->envp.arr, pl->envp.key_ignore, i, pl->envp.size - 1);
-			pl->export.arr[i] = ft_strdup("OLDPWD");
-			ft_swap_str_in_arr(pl->export.arr, pl->export.key_ignore, i, pl->envp.size - 1);
-			count = 0;
-			free(pl->envp.arr[pl->envp.size - 1]);
-			pl->envp.arr[pl->envp.size - 1] = NULL;
-		}
-		else
-		{
-			pl->envp.key_ignore[i] = 0;
-			pl->export.key_ignore[i] = 0;
-		}
-	}
+		ft_mute_oldpwd_utils(pl, i, &count);
 }
 
 void	ft_clean_variables(t_pl *pl)
@@ -82,8 +59,9 @@ void	ft_prepare_variables(t_pl *pl, int round_counter)
 {
 	if (round_counter == 0)
 	{
-		pl->envp.key_ignore = (int*)ft_calloc(pl->envp.size + 60, sizeof(int));
-		pl->export.key_ignore = (int*)ft_calloc(pl->export.size + 60, sizeof(int));
+		pl->envp.key_ignore = (int *)ft_calloc(pl->envp.size + 60, sizeof(int));
+		pl->export.key_ignore = (int *)ft_calloc(pl->export.size + 60,
+				sizeof(int));
 		ft_mute_oldpwd(pl);
 		pl->fd_0 = dup(0);
 		pl->fd_1 = dup(1);

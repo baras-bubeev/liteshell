@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/10 20:51:54 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/27 21:45:05 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/09/11 01:59:09 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ void	ft_cd_flag(t_pl *pl, int cmd_i, int cmd_argc)
 {
 	if (cmd_argc == 1)
 		ft_cd_to_home_directory(pl, cmd_i);
-	else if((ft_strcmp(pl->cmd.argv[cmd_i][1], "/")) == 0)
+	else if ((ft_strcmp(pl->cmd.argv[cmd_i][1], "/")) == 0)
 		ft_cd_to_top_directory(pl, cmd_i);
-	else if((pl->cmd.argv[cmd_i][1][0] == '.') && (pl->cmd.argv[cmd_i][1][1] == '.'))
+	else if ((pl->cmd.argv[cmd_i][1][0] == '.') &&
+		(pl->cmd.argv[cmd_i][1][1] == '.'))
 		ft_cd_with_dot(pl, cmd_i);
-	else if(pl->cmd.argv[cmd_i][1][0] == '#' || pl->cmd.argv[cmd_i][1][0] == '~' ||
+	else if (pl->cmd.argv[cmd_i][1][0] == '#' ||
+		pl->cmd.argv[cmd_i][1][0] == '~' ||
 		pl->cmd.argv[cmd_i][1][0] == '-')
 		ft_error_subject("cd", "with only a relative or absolute path");
 	else
@@ -36,9 +38,10 @@ void	ft_cd(t_pl *pl, int cmd_i)
 	j = -1;
 	i = -1;
 	pl->envp.pwd = ft_find_string_int(pl->envp.arr, "PWD=");
-	while(++i < pl->export.size && (ft_strcmp(pl->export.arr[i], "OLDPWD")));
-	if ((i != pl->export.size) ||
-	((j = ft_find_string_int(pl->export.arr, "OLDPWD=")) >= 0))
+	while (++i < pl->export.size && (ft_strcmp(pl->export.arr[i], "OLDPWD")))
+		;
+	j = ft_find_string_int(pl->export.arr, "OLDPWD=");
+	if ((i != pl->export.size) || (j >= 0))
 		if (i != pl->export.size)
 			j = i;
 	pl->envp.oldpwd = j;

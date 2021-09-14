@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sort_and_print_arr.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 18:54:27 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/26 14:05:31 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/09/11 01:05:59 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_print_arr(char **arr, int *key_ignore, int type)
 	i = -1;
 	while (arr[++i])
 	{
-		if(key_ignore[i] == 0)
+		if (key_ignore[i] == 0)
 		{
 			if (type)
 				write(1, "declare -x ", 11);
@@ -42,14 +42,14 @@ static void	ft_sort_arr_second(char **copy_arr, int *copy_key_ignore, int i)
 	copy_key_ignore[i + 1] = tmp_ignore;
 }
 
-void		ft_sort_arr_and_print(t_size *arr, int i, int j)
+void	ft_sort_arr_and_print(t_size *arr, int i, int j)
 {
 	char	**copy_arr;
 	int		*copy_key_ignore;
 
 	copy_arr = ft_make_arr_copy(&i, arr->arr);
 	copy_key_ignore = ft_calloc(sizeof(int), arr->size);
-	while(++j < arr->size)
+	while (++j < arr->size)
 		copy_key_ignore[j] = arr->key_ignore[j];
 	j = -1;
 	while (++j < arr->size - 1)

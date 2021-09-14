@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 08:20:42 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/26 13:50:12 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/09/11 01:35:29 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-
 void	ft_env(t_pl *pl, int cmd_i)
 {
-	int		cmd_argc;
+	int	cmd_argc;
 
 	cmd_argc = ft_count_cmd_argv(pl, cmd_i);
 	if (cmd_argc == 1)

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_path.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 18:46:29 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/27 21:46:47 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/09/11 01:07:53 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void		ft_path(t_pl *pl)
+void	ft_path(t_pl *pl)
 {
 	int		count_path_str;
 	char	*tmp;

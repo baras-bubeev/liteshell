@@ -6,7 +6,7 @@
 /*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 10:59:39 by mpowder           #+#    #+#             */
-/*   Updated: 2021/09/10 15:11:04 by mpowder          ###   ########.fr       */
+/*   Updated: 2021/09/10 21:07:39 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	double_redirect(char *str)
 {
-	int 	fd;
+	int		fd;
 	char	*buff;
 
 	fd = open(".tmp", O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -37,20 +37,27 @@ int	double_redirect(char *str)
 
 char	*get_fname(char *str, int *i)
 {
-	int start;
+	int	strt;
 	int	len;
 
-	start = 0;
-	while (str[start] == ' ' || str[start] == '\t')
-		start++;
+	strt = 0;
+	if (str[0] == '>' || str[0] == '<')
+	{
+		write(2, "minishell: syntax error near unexpected token `", 47);
+		ft_putchar_fd(str[0], 2);
+		write(2, "'\n", 2);
+		return (0);
+	}
+	while (str[strt] == ' ' || str[strt] == '\t')
+		strt++;
 	len = 0;
-	while (str[start + len] && str[start + len] != ' ' && str[start + len] != '\t')
+	while (str[strt + len] && str[strt + len] != ' ' && str[strt + len] != '\t')
 		len++;
-	*i += start + len;
-	return (ft_substr(str, start, len));
+	*i += strt + len;
+	return (ft_substr(str, strt, len));
 }
 
-int		get_fd_out(char *fname, int fl)
+int	get_fd_out(char *fname, int fl)
 {
 	int	fd;
 
@@ -67,7 +74,7 @@ int		get_fd_out(char *fname, int fl)
 	return (fd);
 }
 
-int		get_fd_in(char *fname, int fl)
+int	get_fd_in(char *fname, int fl)
 {
 	int	fd;
 
@@ -88,7 +95,7 @@ int		get_fd_in(char *fname, int fl)
 
 void	redirect(char *str, int *i, t_pl *pl, char redir)
 {
-	int 	heredoc;
+	int		heredoc;
 	char	*fname;
 	int		slen;
 
@@ -103,6 +110,8 @@ void	redirect(char *str, int *i, t_pl *pl, char redir)
 	if (heredoc)
 		(*i)++;
 	fname = get_fname(str + (++(*i)), i);
+	if (!fname)
+		return ;
 	if (redir == '>')
 		pl->fd_out = get_fd_out(fname, heredoc);
 	else

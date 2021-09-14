@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 18:48:19 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/27 21:28:48 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/09/11 06:11:23 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	ft_start_builtin(t_pl *pl, int cmd_i)
 		ft_env(pl, cmd_i);
 	else if (!(ft_strcmp(pl->cmd.argv[cmd_i][0], "export")))
 		ft_export(pl, cmd_i);
-	else if(!(ft_strcmp(pl->cmd.argv[cmd_i][0], "exit")))
+	else if (!(ft_strcmp(pl->cmd.argv[cmd_i][0], "exit")))
 		ft_exit(pl, cmd_i, 0);
 }
 
-int		ft_if_builtin(t_pl *pl, int cmd_i, char *builtin, int key, int size)
+int	ft_if_builtin(t_pl *pl, int cmd_i, int key, int size)
 {
 	int		i;
 	int		count;
@@ -39,9 +39,9 @@ int		ft_if_builtin(t_pl *pl, int cmd_i, char *builtin, int key, int size)
 
 	i = 1;
 	count = 0;
-	tmp = ft_split(builtin, ' ');
+	tmp = ft_split(BUILTIN, ' ');
 	while (pl->pipe_line[size] && pl->pipe_line[size] != ' ')
-		size++;	
+		size++;
 	tmp_cmd = ft_strdup_len(pl->pipe_line, size);
 	while (tmp[i] && count == 0)
 	{

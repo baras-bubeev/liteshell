@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 18:47:19 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/27 21:46:09 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/09/11 08:43:37 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	ft_free_pids(t_pl *pl)
 {
 	int		i;
-	
+
 	i = -1;
 	free(pl->p.pids);
-	while (++i < pl->p.npipes + 1)
+	while (++i < pl->p.npipes + 3)
 		free(pl->p.fd[i]);
 	free(pl->p.fd);
 	pl->p.pids = NULL;
@@ -27,10 +27,10 @@ void	ft_free_pids(t_pl *pl)
 
 void	ft_free_arr(char **arr)
 {
-	int i;
+	int	i;
 
 	i = -1;
-	while(arr[++i])
+	while (arr[++i])
 	{
 		free(arr[i]);
 		arr[i] = NULL;

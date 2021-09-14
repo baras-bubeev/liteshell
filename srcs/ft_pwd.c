@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 19:01:56 by kseniakozyr       #+#    #+#             */
-/*   Updated: 2021/07/26 14:24:02 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/09/11 01:07:29 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 void	ft_pwd(t_pl *pl)
 {
 	int		len;
-	char *tmp;
-	
+	char	*tmp;
+
 	tmp = getcwd(NULL, 0);
 	if (tmp != NULL)
 	{
@@ -34,5 +34,4 @@ void	ft_pwd(t_pl *pl)
 		write(1, "\n", 1);
 		free(tmp);
 	}
-
 }

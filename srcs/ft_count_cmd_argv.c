@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_count_cmd_argv.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/17 10:50:01 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/17 10:50:25 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/09/11 01:36:30 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int		ft_count_cmd_argv(t_pl *pl, int cmd_i)
+int	ft_count_cmd_argv(t_pl *pl, int cmd_i)
 {
-	int		i;
+	int	i;
 
 	i = -1;
-	while (pl->cmd.argv[cmd_i][++i]);
+	while (pl->cmd.argv[cmd_i][++i])
+		;
 	return (i);
 }

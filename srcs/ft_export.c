@@ -3,25 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/22 11:13:39 by jkorey            #+#    #+#             */
-/*   Updated: 2021/07/27 22:10:37 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/09/11 01:29:34 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	*ft_take_str_in_quotes(char *str)
-{
-	char	*tmp1;
-	char	*tmp2;
-	
-	tmp1 = ft_strjoin(str, "\"");
-	tmp2 = ft_strjoin("\"", tmp1);
-	free(tmp1);
-	return(tmp2);
-}
 
 char	*ft_connect_str_in_one(char **strings, int i_start, int argc)
 {
@@ -34,11 +23,11 @@ char	*ft_connect_str_in_one(char **strings, int i_start, int argc)
 	tmp2 = NULL;
 	while (i_start < argc)
 	{
-		if(!(tmp1))
+		if (!(tmp1))
 			tmp1 = ft_strjoin(strings[i_start], strings[i_start + 1]);
 		else
 		{
-			if((tmp2))
+			if ((tmp2))
 				free(tmp2);
 			tmp2 = ft_strdup(tmp1);
 			free(tmp1);
@@ -57,13 +46,17 @@ void	ft_export_without_equal_sign(t_pl *pl, char *str)
 
 	i = -1;
 	tmp = ft_strjoin(str, "=");
-	while(++i < pl->export.size && (ft_strcmp(pl->export.arr[i], str)));
+	while (++i < pl->export.size && (ft_strcmp(pl->export.arr[i], str)))
+		;
 	if (i == pl->export.size)
-		if ((i = ft_find_string_int(pl->export.arr, tmp)) < 0)
+	{
+		i = ft_find_string_int(pl->export.arr, tmp);
+		if (i < 0)
 		{
 			ft_add_line_in_arr(&pl->export, str, 0);
 			ft_add_line_in_arr(&pl->envp, str, 1);
 		}
+	}
 	free(tmp);
 }
 
@@ -71,19 +64,17 @@ void	ft_export_with_equal_sign(t_pl *pl, char *str, char **cmd)
 {
 	int		i;
 	int		j;
-	char	*tmp;
 
 	i = -1;
 	j = -1;
-	while(++i < pl->export.size && (ft_strcmp(pl->export.arr[i], cmd[0])));
-	if ((i == pl->export.size) &&
-		((j = ft_find_string_int(pl->export.arr, cmd[1])) < 0))
-		{
-			tmp = ft_strjoin(cmd[1], cmd[3]);
-			ft_add_line_in_arr(&pl->export, tmp, 0);
-			ft_add_line_in_arr(&pl->envp, str, 0);
-			free(tmp);
-		}
+	while (++i < pl->export.size && (ft_strcmp(pl->export.arr[i], cmd[0])))
+		;
+	if (i == pl->export.size)
+	{
+		j = ft_find_string_int(pl->export.arr, cmd[1]);
+		if (j < 0)
+			ft_export_with_equal_sign_utils(pl, str, cmd);
+	}
 	else
 	{
 		if (i != pl->export.size)
@@ -105,7 +96,7 @@ void	ft_export_parser(t_pl *pl, char *str)
 
 	if (!(ft_isalpha(str[0])) && str[0] != '_')
 		ft_error_valid_identifier("export", str);
-	cmd = ft_calloc(sizeof(char*), 5);
+	cmd = ft_calloc(sizeof(char *), 5);
 	i = 0;
 	len = ft_strlen(str);
 	while (str[i] && str[i] != '=')

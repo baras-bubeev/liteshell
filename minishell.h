@@ -6,7 +6,7 @@
 /*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/19 17:20:11 by jkorey            #+#    #+#             */
-/*   Updated: 2021/09/10 13:23:59 by mpowder          ###   ########.fr       */
+/*   Updated: 2021/09/11 06:18:13 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,34 +19,38 @@
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include "libft/libft.h"
 # include <string.h>
 # include <fcntl.h>
-# include "minishell2.h"
 # include <termios.h>
+# include "readline/readline.h"
+# include "readline/history.h"
+# include "libft/libft.h"
 
-int	cmd_exit;
+# define PIPE_ERROR "minishell: syntax error near unexpected token `|'"
+# define APSTR_ERROR "minishell: unexpected EOF while looking for matching `\''"
+# define QUOTE_ERROR "minishell: unexpected EOF while looking for matching `\"'"
+# define BUILTIN "echo cd pwd export unset env exit"
+
+int	g_cmd_exit;
 
 // key_ignore = 1 - игнорировать
 // key_ignore = 0 - работать
 
-typedef struct		s_size
+typedef struct s_size
 {
 	char	**arr;
 	int		*key_ignore;
 	int		size;
-	// int		oldsize;
-	// int		newsize;
 	int		oldpwd;
 	int		pwd;
 
-}					t_size;
+}			t_size;
 
 // cmd_flag = 1 - pipe and not subject cmd;
 // cmd flag = 2 - simple builtin comand;
 // cmd flag = 3 - redirect;
 
-typedef struct		s_pipe
+typedef struct s_pipe
 {
 	int		npipes;
 	int		fd_0;
@@ -54,34 +58,24 @@ typedef struct		s_pipe
 	int		*pids;
 	pid_t	pid;
 	int		**fd;
-}					t_pipe;
+}			t_pipe;
 
 //структура нижнего уровня - для команд (внутри ;)
-typedef struct		s_cmd
+typedef struct s_cmd
 {
 	char	***argv;
 	char	**name;
 	char	**right_path;
 	int		old_flag;
-}					t_cmd;
-
-// typedef struct		s_redirect
-// {
-// 	char	*fname_out;
-// 	char	*fname_in;
-// 	int		fd_out;
-// 	int		fd_in;
-// }					t_redirect;
-
+}			t_cmd;
 
 //структура верхнего уровня - для пайплайнов (до ;)
-typedef struct		s_pl
+typedef struct s_pl
 {
 	t_size		envp;
 	t_size		export;
 	t_pipe		p;
 	t_cmd		cmd;
-	// t_redirect	redir;
 	int			fd_0;
 	int			fd_1;
 	char		*pipe_line;
@@ -90,7 +84,7 @@ typedef struct		s_pl
 	char		**path;
 	int			fd_in;
 	int			fd_out;
-}					t_pl;
+}				t_pl;
 
 void	ft_add_line_in_arr(t_size *arr, char *line, int key_ignore);
 void	*ft_calloc(size_t count, size_t size);
@@ -109,16 +103,17 @@ void	ft_env(t_pl *pl, int cmd_i);
 void	ft_error_cmd_not_found(char *name);
 void	ft_error_valid_identifier(char *name, char *condition);
 void	ft_error_directory(char *cmd_name, char *argv_name);
-void	ft_error_malloc();
+void	ft_error_malloc(void);
 void	ft_error_not_set_name(char *name, char *condition);
 void	ft_error_numeric(char *name, char *condition);
 void	ft_error_oldpwd(char *name);
 void	ft_error_subject(char *name, char *condition);
 void	ft_error_too_many_argv(char *name);
 void	ft_error_undefined_error(char *name);
-void	ft_error (int i);
+void	ft_error(int i);
 void	ft_execve(int cmd_i, t_pl *pl);
 void	ft_exit(t_pl *pl, int cmd_i, int j);
+char	*ft_exit_my(char *err_msg);
 void	ft_export(t_pl *pl, int cmd_i);
 void	ft_export_without_equal_sign(t_pl *pl, char *str);
 int		ft_find_cmd_path(int name, t_pl *pl);
@@ -127,7 +122,7 @@ int		ft_find_string_int(char **arr, char *name);
 void	ft_fork(char *pipe_line, t_pl *pl, int i);
 void	ft_free_arr(char **arr);
 void	ft_free_pids(t_pl *pl);
-int		ft_if_builtin(t_pl *pl, int cmd_i, char *builtin, int key, int size);
+int		ft_if_builtin(t_pl *pl, int cmd_i, int key, int size);
 int		ft_is_exec(char *path);
 char	**ft_make_arr_copy(int *size, char **arr);
 void	ft_npipes(char *pipe_line, t_pl *pl);
@@ -137,7 +132,7 @@ void	ft_prepare_variables(t_pl *pl, int round_counter);
 void	ft_print_arr(char **arr, int *key_ignore, int type);
 void	ft_pwd(t_pl *pl);
 void	ft_replace_key_in_arr(char *str, char *key, char *new_key);
-void	ft_replace_mining_in_arr(char *str, char *key, char *new_mining);
+void	ft_replace_mining_in_arr(char **str, char *key, char *new_mining);
 void	ft_set_cmd_flag(t_pl *pl, char *pipe_line);
 void	ft_shlvl(t_pl *pl);
 void	ft_single_builtin(char *pipe_line, t_pl *pl, int i);
@@ -151,10 +146,14 @@ void	ft_swap_str_in_arr(char **arr, int	*key_ignore, int str1, int str2);
 void	ft_unset(t_pl *pl, int cmd_i);
 void	ft_waitpid(t_pl *pl, int i);
 void	loop(t_pl *pl);
-// void	ft_start_comands(t_pl *pl, char *pipe_line);
 void	ft_start_comands(t_pl *pl);
 char	*str_check(char *str, t_pl *pl);
 void	redirect(char *str, int *i, t_pl *pl, char redir);
 int		double_redirect(char *str);
+char	*key_search(char **key, char **envp);
+void	ft_mute_oldpwd_utils(t_pl *pl, int i, int *count);
+char	*ft_take_str_in_quotes(char *str);
+void	ft_export_with_equal_sign_utils(t_pl *pl, char *str, char **cmd);
+char	*count_pipe(char *str, t_pl *pl);
 
 #endif

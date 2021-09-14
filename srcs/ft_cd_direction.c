@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd_direction.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jkorey <jkorey@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mpowder <mpowder@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/20 07:28:58 by jkorey            #+#    #+#             */
-/*   Updated: 2021/09/03 12:41:16 by jkorey           ###   ########.fr       */
+/*   Updated: 2021/09/11 01:56:36 by mpowder          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	ft_cd_with_dot(t_pl *pl, int cmd_i)
 
 	tmp_pwd = getcwd(NULL, 0);
 	pl->cmd.right_path[cmd_i] = ft_strdup(pl->cmd.argv[cmd_i][1]);
-	if ((result = chdir(pl->cmd.right_path[cmd_i])) == -1)
+	result = chdir(pl->cmd.right_path[cmd_i]);
+	if (result == -1)
 		ft_error_directory("cd", pl->cmd.argv[cmd_i][1]);
-	if(!(pl->envp.arr[pl->envp.oldpwd]))
+	if (!(pl->envp.arr[pl->envp.oldpwd]))
 		pl->envp.arr[pl->envp.oldpwd] = ft_strjoin("OLDPWD=", tmp_pwd);
 	else
 		ft_swap_key_in_envp(pl, "PWD=", "OLDPWD=");
-	// tmp = (char*)ft_calloc(100, sizeof(char));
 	tmp = getcwd(NULL, 0);
 	free(pl->envp.arr[pl->envp.pwd]);
 	pl->envp.arr[pl->envp.pwd] = ft_strjoin("PWD=", tmp);
@@ -41,9 +41,10 @@ void	ft_cd_to_top_directory(t_pl *pl, int cmd_i)
 
 	tmp_pwd = getcwd(NULL, 0);
 	pl->cmd.right_path[cmd_i] = ft_strdup("/");
-	if ((result = chdir(pl->cmd.right_path[cmd_i])) == -1)
+	result = chdir(pl->cmd.right_path[cmd_i]);
+	if (result == -1)
 		ft_error_directory("cd", pl->cmd.argv[cmd_i][1]);
-	if(!(pl->envp.arr[pl->envp.oldpwd]))
+	if (!(pl->envp.arr[pl->envp.oldpwd]))
 		pl->envp.arr[pl->envp.oldpwd] = ft_strjoin("OLDPWD=", tmp_pwd);
 	else
 		ft_swap_key_in_envp(pl, "PWD=", "OLDPWD=");
@@ -63,9 +64,10 @@ void	ft_cd_to_home_directory(t_pl *pl, int cmd_i)
 	if (pl->envp.key_ignore[i] == 1)
 		ft_error_not_set_name("cd", "HOME");
 	pl->cmd.right_path[cmd_i] = ft_find_string_char(pl, "HOME=");
-	if ((result = chdir(pl->cmd.right_path[cmd_i])) == -1)
+	result = chdir(pl->cmd.right_path[cmd_i]);
+	if (result == -1)
 		ft_error_directory("cd", pl->cmd.argv[cmd_i][1]);
-	if(!(pl->envp.arr[pl->envp.oldpwd]))
+	if (!(pl->envp.arr[pl->envp.oldpwd]))
 		pl->envp.arr[pl->envp.oldpwd] = ft_strjoin("OLDPWD=", tmp_pwd);
 	else
 		ft_swap_key_in_envp(pl, "PWD=", "OLDPWD=");
@@ -73,7 +75,6 @@ void	ft_cd_to_home_directory(t_pl *pl, int cmd_i)
 	free(pl->envp.arr[pl->envp.pwd]);
 	pl->envp.arr[pl->envp.pwd] = NULL;
 	pl->envp.arr[pl->envp.pwd] = ft_strjoin("PWD=", pl->cmd.right_path[cmd_i]);
-	
 }
 
 void	ft_cd_with_path(t_pl *pl, int cmd_i)
@@ -83,18 +84,19 @@ void	ft_cd_with_path(t_pl *pl, int cmd_i)
 	char	*tmp_pwd;
 
 	tmp_pwd = getcwd(NULL, 0);
-	if (pl->cmd.argv[cmd_i][1][0] != '/') // добавила ветку условий для обработки абсолютного пути
+	if (pl->cmd.argv[cmd_i][1][0] != '/')
 	{
 		pl->cmd.right_path[cmd_i] = ft_find_string_char(pl, "PWD=");
 		tmp = ft_strjoin(pl->cmd.right_path[cmd_i], "/");
 		free(pl->cmd.right_path[cmd_i]);
-		pl->cmd.right_path[cmd_i] = ft_strjoin(tmp, pl->cmd.argv[cmd_i][1]); // поменяла вместо pl->cmd.argv[cmd_i][0] -> pl->cmd.argv[cmd_i][1]
+		pl->cmd.right_path[cmd_i] = ft_strjoin(tmp, pl->cmd.argv[cmd_i][1]);
 	}
 	else
-		pl->cmd.right_path[cmd_i] = ft_strdup(pl->cmd.argv[cmd_i][1]); 
-	if ((result = chdir(pl->cmd.right_path[cmd_i])) == -1)
+		pl->cmd.right_path[cmd_i] = ft_strdup(pl->cmd.argv[cmd_i][1]);
+	result = chdir(pl->cmd.right_path[cmd_i]);
+	if (result == -1)
 		ft_error_directory("cd", pl->cmd.argv[cmd_i][1]);
-	if(!(pl->envp.arr[pl->envp.oldpwd]))
+	if (!(pl->envp.arr[pl->envp.oldpwd]))
 		pl->envp.arr[pl->envp.oldpwd] = ft_strjoin("OLDPWD=", tmp_pwd);
 	else
 		ft_swap_key_in_envp(pl, "PWD=", "OLDPWD=");
